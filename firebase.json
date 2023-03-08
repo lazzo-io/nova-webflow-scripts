@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "lazzo-nova-cdn",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      ".gitignore",
+      "README.md"
+    ]
+  }
+}
