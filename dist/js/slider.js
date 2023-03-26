@@ -1,5 +1,5 @@
 var Webflow = Webflow || [];
-var current_page = 1;
+var page = 1;
 
 /* #region Form fields */
 var headline = $("#Headline");
@@ -16,7 +16,7 @@ var youtube_url = $("#YoutubeURL");
 
 var date_dist = $("#DateDist");
 var states = $("#States");
-var countries = $("#Countries");
+// var countries = $("#Countries");
 var industries = $("#Industries");
 
 /* #endregion */
@@ -27,12 +27,48 @@ Webflow.push(function () {
 
   $("#flowbaseSlider")
     .on("click", ".back-button-slide", function () {
-      //Validate fields
+      if (page >= 1 && page < 5) {
+        page = page - 1;
 
-      l.trigger("tap");
+        l.trigger("tap");
+      }
+
+      $("#PRSlider").get(0).scrollIntoView({ behavior: "smooth" });
     })
     .on("click", ".next-button-slide", function () {
-      r.trigger("tap");
+      let valid = false;
+
+      // Validate fields in page 1
+      if (page == 1 && headline.val() && subheadline.val() && bodypress.val() && source.val() && mediacontact.val()) {
+        styleEmptys();
+        valid = true;
+      } else {
+        styleEmptys();
+      }
+
+      // Validate fields in page 2
+      if (page == 2 && caption_one.val() && caption_two.val() && image_one.val() && image_two.val() && youtube_url.val()) {
+        styleEmptys();
+        valid = true;
+      } else {
+        styleEmptys();
+      }
+
+      // Validate fields in page 3
+      if (page == 3 && date_dist.val() && states.val() && states.val().length > 0 && industries.val() && industries.val().length > 0) {
+        styleEmptys();
+        valid = true;
+      } else {
+        styleEmptys();
+      }
+
+      if (valid && page >= 1 && page < 5) {
+        page = page + 1;
+
+        r.trigger("tap");
+      }
+
+      $("#PRSlider").get(0).scrollIntoView({ behavior: "smooth" });
     });
 });
 
@@ -124,17 +160,17 @@ date_dist.change(function () {
   $("#RenderDateDist").text($(this).val());
 });
 
-countries.change(function () {
-  let list_d = "";
+// countries.change(function () {
+//   let list_d = "";
 
-  $(this)
-    .val()
-    .forEach((d, i) => {
-      list_d = i == 0 ? d : list_d + ", " + d;
-    });
+//   $(this)
+//     .val()
+//     .forEach((d, i) => {
+//       list_d = i == 0 ? d : list_d + ", " + d;
+//     });
 
-  $("#RenderCountries").text(list_d);
-});
+//   $("#RenderCountries").text(list_d);
+// });
 
 states.change(function () {
   let list_d = "";
@@ -161,3 +197,33 @@ industries.change(function () {
 });
 
 /* #endregion */
+
+function styleEmptys() {
+  switch (page) {
+    case 1:
+      !headline.val() ? headline.addClass("empty") : headline.removeClass("empty");
+      !subheadline.val() ? subheadline.addClass("empty") : subheadline.removeClass("empty");
+      !bodypress.val() ? bodypress.addClass("empty") : bodypress.removeClass("empty");
+      !source.val() ? source.addClass("empty") : source.removeClass("empty");
+      !mediacontact.val() ? mediacontact.addClass("empty") : mediacontact.removeClass("empty");
+      break;
+
+    case 2:
+      !caption_one.val() ? caption_one.addClass("empty") : caption_one.removeClass("empty");
+      !caption_two.val() ? caption_two.addClass("empty") : caption_two.removeClass("empty");
+      !image_one.val() ? $("#BoxImage1").addClass("empty") : $("#BoxImage1").removeClass("empty");
+      !image_two.val() ? $("#BoxImage2").addClass("empty") : $("#BoxImage2").removeClass("empty");
+      !youtube_url.val() ? youtube_url.addClass("empty") : youtube_url.removeClass("empty");
+
+      break;
+
+    case 3:
+      !date_dist.val() ? date_dist.addClass("empty") : date_dist.removeClass("empty");
+      states.val() && states.val().length > 0 ? $("#ms-list-1 > button").removeClass("empty") : $("#ms-list-1 > button").addClass("empty");
+      industries.val() && industries.val().length > 0 ? $("#ms-list-2 > button").removeClass("empty") : $("#ms-list-2 > button").addClass("empty");
+
+      break;
+    default:
+      break;
+  }
+}
