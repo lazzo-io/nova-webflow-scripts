@@ -51,6 +51,9 @@ function calculatePrice() {
 
     // Update texts
     document.getElementById("calculator-total-words").innerText = word_counter_near;
+
+    // Update Stripe fields
+    document.getElementById("StripeExtraHundreds").value = extra_100_words;
   } else {
     document.getElementById("calculator-total-words").innerText = 600;
   }
@@ -65,6 +68,9 @@ function calculatePrice() {
     let extra_selectors = state_counter + industry_counter > 3 ? state_counter + industry_counter - BASE_SELECTS : 0;
 
     extra_selects = extra_selectors * EXTRA_ONE_SELECT;
+
+    // Update Stripe fields
+    document.getElementById("StripeExtraStatesInds").value = extra_selectors;
   }
 
   // Update price
