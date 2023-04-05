@@ -19,6 +19,8 @@ var states = $("#States");
 // var countries = $("#Countries");
 var industries = $("#Industries");
 
+$("#DateDist").attr("type", "date");
+
 /* #endregion */
 
 Webflow.push(function () {
@@ -47,7 +49,7 @@ Webflow.push(function () {
       }
 
       // Validate fields in page 2
-      if (page == 2 && caption_one.val() && caption_two.val() && image_one.val() && image_two.val() && youtube_url.val()) {
+      if (page == 2 && caption_one.val() && image_one.val() && youtube_url.val()) {
         styleEmptys();
         valid = true;
       } else {
@@ -210,9 +212,9 @@ function styleEmptys() {
 
     case 2:
       !caption_one.val() ? caption_one.addClass("empty") : caption_one.removeClass("empty");
-      !caption_two.val() ? caption_two.addClass("empty") : caption_two.removeClass("empty");
+      //!caption_two.val() ? caption_two.addClass("empty") : caption_two.removeClass("empty");
       !image_one.val() ? $("#BoxImage1").addClass("empty") : $("#BoxImage1").removeClass("empty");
-      !image_two.val() ? $("#BoxImage2").addClass("empty") : $("#BoxImage2").removeClass("empty");
+      //!image_two.val() ? $("#BoxImage2").addClass("empty") : $("#BoxImage2").removeClass("empty");
       !youtube_url.val() ? youtube_url.addClass("empty") : youtube_url.removeClass("empty");
 
       break;
