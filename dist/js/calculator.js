@@ -56,6 +56,9 @@ function calculatePrice() {
     document.getElementById("StripeExtraHundreds").value = extra_100_words;
   } else {
     document.getElementById("calculator-total-words").innerText = 600;
+
+    // Update Stripe fields
+    document.getElementById("StripeExtraHundreds").value = 0;
   }
 
   // Calculate States
