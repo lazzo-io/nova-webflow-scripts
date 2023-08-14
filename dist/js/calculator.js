@@ -1,5 +1,3 @@
-console.log("Nova counter is ON");
-
 const BASE_PRICE = 397;
 const BASE_WORDS = 600;
 const BASE_SELECTS = 3;
@@ -10,6 +8,8 @@ var timer;
 const area = document.getElementById("BodyPress");
 const states_cal = $("#States");
 const industries_cal = $("#Industries");
+
+document.getElementById("FORMID").value = getUID();
 
 area.addEventListener("input", function () {
   clearTimeout(timer);
@@ -54,11 +54,17 @@ function calculatePrice() {
 
     // Update Stripe fields
     document.getElementById("StripeExtraHundreds").value = extra_100_words;
+
+    // Update texts
+    document.getElementById("calculator-extra-words").innerText = word_counter - BASE_WORDS;
   } else {
-    document.getElementById("calculator-total-words").innerText = 600;
+    document.getElementById("calculator-total-words").innerText = BASE_WORDS;
 
     // Update Stripe fields
     document.getElementById("StripeExtraHundreds").value = 0;
+
+    // Update texts
+    document.getElementById("calculator-extra-words").innerText = 0;
   }
 
   // Calculate States
@@ -74,6 +80,9 @@ function calculatePrice() {
 
     // Update Stripe fields
     document.getElementById("StripeExtraStatesInds").value = extra_selectors;
+
+     // Update texts
+    document.getElementById("calculator-extra-states").innerText = extra_selectors;
   }
 
   // Update price
@@ -86,7 +95,7 @@ function calculatePrice() {
 }
 
 function wordCounter() {
-  return area ? area.value.length : 0;
+  return area ? area.value.split(" ").length : 0;
 }
 
 function selectCounter(selector) {
@@ -99,4 +108,18 @@ function selectCounter(selector) {
     });
 
   return count;
+}
+
+function getUID(){
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+  const d = new Date();
+  
+  let out = '';
+  let dFormat = `${d.getFullYear().toString().substring(3,4)}${((d.getMonth() + 10) * 31) + d.getDate()}`;
+
+  for(var i=0, clen=chars.length; i<4; i++){
+     out += chars.substr(0|Math.random() * clen, 1);
+  }
+
+  return (out + Number(dFormat).toString(36)).toUpperCase();
 }

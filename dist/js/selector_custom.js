@@ -1,11 +1,12 @@
-$(function () {
-  $("#States").multiselect({
-    columns: 1,
-    placeholder: "Select a state",
-    search: true,
-    searchOptions: {
-      default: "Type to search states",
-    },
+  $('#States').ready(function() {
+    $("#States").multiselect({
+      columns: 1,
+      placeholder: "Select a state",
+      search: true,
+      searchOptions: {
+        default: "Type to search states",
+      },
+    });
   });
 
   // $("#Countries").multiselect({
@@ -17,12 +18,13 @@ $(function () {
   //   },
   // });
 
-  $("#Industries").multiselect({
-    columns: 1,
-    placeholder: "Select an industry",
-    search: true,
-    searchOptions: {
-      default: "Type to search industries",
-    },
+  $('#Industries').ready(function() {
+    $("#Industries").multiselect({
+      columns: 1,
+      placeholder: "Select an industry",
+      search: true,
+      searchOptions: {
+        default: "Type to search industries",
+      },
+    });
   });
-});
