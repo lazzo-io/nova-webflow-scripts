@@ -41,7 +41,7 @@ Webflow.push(function () {
       let valid = false;
 
       // Validate fields in page 1
-      if (page == 1 && headline.val() && subheadline.val() && bodypress.val() && source.val() && mediacontact.val()) {
+      if (page == 1 && headline.val() && subheadline.val() && bodypress.val() && source.val()) {
         styleEmptys();
         valid = true;
       } else {
@@ -49,7 +49,7 @@ Webflow.push(function () {
       }
 
       // Validate fields in page 2
-      if (page == 2 && caption_one.val() && image_one.val() && youtube_url.val()) {
+      if (page == 2) {
         styleEmptys();
         valid = true;
       } else {
@@ -87,16 +87,22 @@ subheadline.change(function () {
   $("#RenderSubheadline").text($(this).val());
 });
 
-bodypress.change(function () {
-  $("#RenderBodyPress").text($(this).val());
-});
+// bodypress.change(function () {
+//   $("#RenderBodyPress").text($(this).val());
+// });
 
 source.change(function () {
   $("#RenderSource").text($(this).val());
 });
 
-mediacontact.change(function () {
-  $("#RenderMediaContact").text($(this).val());
+// mediacontact.change(function () {
+//   $("#RenderMediaContact").text($(this).val());
+// });
+
+quill.on('text-change', function(delta, oldDelta, source) {
+  $("#BodyPress").text(quill.root.innerHTML).trigger("input");
+
+  $("#RenderBodyPress").html(quill.root.innerHTML);
 });
 
 /* Step 2 */
@@ -207,15 +213,15 @@ function styleEmptys() {
       !subheadline.val() ? subheadline.addClass("empty") : subheadline.removeClass("empty");
       !bodypress.val() ? bodypress.addClass("empty") : bodypress.removeClass("empty");
       !source.val() ? source.addClass("empty") : source.removeClass("empty");
-      !mediacontact.val() ? mediacontact.addClass("empty") : mediacontact.removeClass("empty");
+      // !mediacontact.val() ? mediacontact.addClass("empty") : mediacontact.removeClass("empty");
       break;
 
     case 2:
-      !caption_one.val() ? caption_one.addClass("empty") : caption_one.removeClass("empty");
+      // !caption_one.val() ? caption_one.addClass("empty") : caption_one.removeClass("empty");
       //!caption_two.val() ? caption_two.addClass("empty") : caption_two.removeClass("empty");
-      !image_one.val() ? $("#BoxImage1").addClass("empty") : $("#BoxImage1").removeClass("empty");
+      // !image_one.val() ? $("#BoxImage1").addClass("empty") : $("#BoxImage1").removeClass("empty");
       //!image_two.val() ? $("#BoxImage2").addClass("empty") : $("#BoxImage2").removeClass("empty");
-      !youtube_url.val() ? youtube_url.addClass("empty") : youtube_url.removeClass("empty");
+      //!youtube_url.val() ? youtube_url.addClass("empty") : youtube_url.removeClass("empty");
 
       break;
 

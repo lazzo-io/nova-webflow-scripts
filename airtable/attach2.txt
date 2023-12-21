@@ -1,0 +1,1 @@
+IF({Image 2}=BLANK(), "", "{" & "\"title\" : \"" & {Image Caption 2} & "\", \"fileName\" : \"" & {Image 2} & "\", \"FileContentBase64Encoded\" : \"" & {Image 2} & "\", \"caption\" : \"" & {Image Caption 2} & "\", \"copyright\" : \"" & {Image Caption 2} & "\" }")

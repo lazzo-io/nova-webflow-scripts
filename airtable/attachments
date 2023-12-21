@@ -1,0 +1,1 @@
+IF(AND({attach1}=BLANK(), {attach2}=BLANK()), "[]",IF(AND({attach1}!=BLANK(), {attach2}=BLANK()), "[" & {attach1} & "]", IF(AND({attach1}=BLANK(), {attach2}!=BLANK()), "[" & {attach2} & "]", IF(AND({attach1}!=BLANK(), {attach2}!=BLANK()), "[" & {attach1} & ", " & {attach2}  & "]","[]"))))

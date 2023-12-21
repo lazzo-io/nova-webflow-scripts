@@ -11,13 +11,21 @@ const industries_cal = $("#Industries");
 
 document.getElementById("FORMID").value = getUID();
 
-area.addEventListener("input", function () {
+$("#BodyPress").on("input", function() {
   clearTimeout(timer);
 
   timer = setTimeout(() => {
     calculatePrice();
   }, 500);
 });
+
+// area.addEventListener("input", function () {
+//   clearTimeout(timer);
+
+//   timer = setTimeout(() => {
+//     calculatePrice();
+//   }, 500);
+// });
 
 states_cal.change(function () {
   clearTimeout(timer);
@@ -95,7 +103,9 @@ function calculatePrice() {
 }
 
 function wordCounter() {
-  return area ? area.value.split(" ").length : 0;
+  let _text = quill.getText();
+
+  return _text ? _text.split(/[\s\n]/g).filter(Boolean).length : 0;
 }
 
 function selectCounter(selector) {
