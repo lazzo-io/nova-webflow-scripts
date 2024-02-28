@@ -2,6 +2,8 @@ var Webflow = Webflow || [];
 var page = 1;
 
 /* #region Form fields */
+var tiers = $('input[name="Tiers"]');
+
 var headline = $("#Headline");
 var subheadline = $("#Subheadline");
 var bodypress = $("#BodyPress");
@@ -29,7 +31,7 @@ Webflow.push(function () {
 
   $("#flowbaseSlider")
     .on("click", ".back-button-slide", function () {
-      if (page >= 1 && page < 5) {
+      if (page >= 1 && page < 6) {
         page = page - 1;
 
         l.trigger("tap");
@@ -41,7 +43,15 @@ Webflow.push(function () {
       let valid = false;
 
       // Validate fields in page 1
-      if (page == 1 && headline.val() && subheadline.val() && bodypress.val() && source.val()) {
+      if (page == 1 && tiers.val()) {
+        styleEmptys();
+        valid = true;
+      } else {
+        styleEmptys();
+      }
+
+      // Validate fields in page 1
+      if (page == 2 && headline.val() && subheadline.val() && bodypress.val() && source.val()) {
         styleEmptys();
         valid = true;
       } else {
@@ -49,7 +59,7 @@ Webflow.push(function () {
       }
 
       // Validate fields in page 2
-      if (page == 2) {
+      if (page == 3) {
         styleEmptys();
         valid = true;
       } else {
@@ -57,14 +67,14 @@ Webflow.push(function () {
       }
 
       // Validate fields in page 3
-      if (page == 3 && date_dist.val() && states.val() && states.val().length > 0 && industries.val() && industries.val().length > 0) {
+      if (page == 4 && date_dist.val() && states.val() && states.val().length > 0 && industries.val() && industries.val().length > 0) {
         styleEmptys();
         valid = true;
       } else {
         styleEmptys();
       }
 
-      if (valid && page >= 1 && page < 5) {
+      if (valid && page >= 1 && page < 6) {
         page = page + 1;
 
         r.trigger("tap");
@@ -79,6 +89,11 @@ Webflow.push(function () {
 /* #region Render Order Detail */
 
 /* Step 1 */
+tiers.change(function () {
+  $("#RenderTier").text($(this).val());
+});
+
+/* Step 2 */
 headline.change(function () {
   $("#RenderHeadline").text($(this).val());
 });
@@ -105,7 +120,7 @@ quill.on('text-change', function(delta, oldDelta, source) {
   $("#RenderBodyPress").html(quill.root.innerHTML);
 });
 
-/* Step 2 */
+/* Step 3 */
 
 image_one.change(function () {
   if (image_one.val() !== "") {
@@ -162,7 +177,7 @@ youtube_url.change(function () {
   }
 });
 
-/* Step 3 */
+/* Step 4 */
 
 date_dist.change(function () {
   $("#RenderDateDist").text($(this).val());
@@ -209,6 +224,10 @@ industries.change(function () {
 function styleEmptys() {
   switch (page) {
     case 1:
+      !tiers.val() ? tiers.addClass("empty") : tiers.removeClass("empty");
+      break;
+
+    case 2:
       !headline.val() ? headline.addClass("empty") : headline.removeClass("empty");
       !subheadline.val() ? subheadline.addClass("empty") : subheadline.removeClass("empty");
       !bodypress.val() ? bodypress.addClass("empty") : bodypress.removeClass("empty");
@@ -216,7 +235,7 @@ function styleEmptys() {
       // !mediacontact.val() ? mediacontact.addClass("empty") : mediacontact.removeClass("empty");
       break;
 
-    case 2:
+    case 3:
       // !caption_one.val() ? caption_one.addClass("empty") : caption_one.removeClass("empty");
       //!caption_two.val() ? caption_two.addClass("empty") : caption_two.removeClass("empty");
       // !image_one.val() ? $("#BoxImage1").addClass("empty") : $("#BoxImage1").removeClass("empty");
@@ -225,7 +244,7 @@ function styleEmptys() {
 
       break;
 
-    case 3:
+    case 4:
       !date_dist.val() ? date_dist.addClass("empty") : date_dist.removeClass("empty");
       states.val() && states.val().length > 0 ? $("#ms-list-1 > button").removeClass("empty") : $("#ms-list-1 > button").addClass("empty");
       industries.val() && industries.val().length > 0 ? $("#ms-list-2 > button").removeClass("empty") : $("#ms-list-2 > button").addClass("empty");

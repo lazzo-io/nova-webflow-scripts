@@ -1,15 +1,30 @@
 const BASE_PRICE = 397;
+
+const TIER_1_PRICE = 397;
+const TIER_2_PRICE = 450;
+const TIER_3_PRICE = 480;
+
 const BASE_WORDS = 600;
 const BASE_SELECTS = 3;
 const EXTRA_ONEHND_WORDS = 147;
 const EXTRA_ONE_SELECT = 147;
 var timer;
 
+// const tiers = $('input[name="Tiers"]');
+
 const area = document.getElementById("BodyPress");
 const states_cal = $("#States");
 const industries_cal = $("#Industries");
 
 document.getElementById("FORMID").value = getUID();
+
+tiers.change(function () {
+  clearTimeout(timer);
+
+  timer = setTimeout(() => {
+    calculatePrice();
+  }, 100);
+});
 
 $("#BodyPress").on("input", function() {
   clearTimeout(timer);
@@ -47,6 +62,12 @@ function calculatePrice() {
   let total = BASE_PRICE;
   let extra_words = 0;
   let extra_selects = 0;
+
+  let tier = $('input[name="Tiers"]:checked').val();
+  
+  if(tier === "Tier1") total = TIER_1_PRICE;
+  if(tier === "Tier2") total = TIER_2_PRICE;
+  if(tier === "Tier3") total = TIER_3_PRICE;
 
   let word_counter = wordCounter();
 
