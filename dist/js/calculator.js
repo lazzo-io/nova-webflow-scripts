@@ -1,20 +1,27 @@
 const BASE_PRICE = 397;
 
 const TIER_1_PRICE = 397;
-const TIER_2_PRICE = 450;
-const TIER_3_PRICE = 480;
+const TIER_2_PRICE = 497;
+const TIER_3_PRICE = 697;
 
 const BASE_WORDS = 600;
 const BASE_SELECTS = 3;
 const EXTRA_ONEHND_WORDS = 147;
 const EXTRA_ONE_SELECT = 147;
+
+const MAX_EXTRA_SELECT = 5;
+
+const EXTRA_SAME_DAY = 150;
+
 var timer;
 
-// const tiers = $('input[name="Tiers"]');
+const tiers = $('input[name="Tiers"]');
 
 const area = document.getElementById("BodyPress");
 const states_cal = $("#States");
 const industries_cal = $("#Industries");
+
+const date_dist_cal = $("#DateDist");
 
 document.getElementById("FORMID").value = getUID();
 
@@ -51,6 +58,14 @@ states_cal.change(function () {
 });
 
 industries_cal.change(function () {
+  clearTimeout(timer);
+
+  timer = setTimeout(() => {
+    calculatePrice();
+  }, 500);
+});
+
+date_dist_cal.change(function () {
   clearTimeout(timer);
 
   timer = setTimeout(() => {
@@ -116,6 +131,21 @@ function calculatePrice() {
 
   // Update price
   total = total + extra_words + extra_selects;
+
+   //Update same day price
+  try{
+    if(new Date(date_dist_cal.val()).getUTCDate() === new Date().getUTCDate()) {
+      document.getElementById("StripeExtraSameDay").value = 1;
+      
+      total = total + EXTRA_SAME_DAY;
+    }
+    else {
+      document.getElementById("StripeExtraSameDay").value = 0;
+    }
+  }
+  catch(e){
+    console.error("Error parsing date");
+  }
 
   document.getElementById("calculator-total-price").innerText = total;
 

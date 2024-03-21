@@ -2,8 +2,6 @@ var Webflow = Webflow || [];
 var page = 1;
 
 /* #region Form fields */
-var tiers = $('input[name="Tiers"]');
-
 var headline = $("#Headline");
 var subheadline = $("#Subheadline");
 var bodypress = $("#BodyPress");
@@ -22,6 +20,7 @@ var states = $("#States");
 var industries = $("#Industries");
 
 $("#DateDist").attr("type", "date");
+$("#DateDist").attr("min", new Date().toISOString().split("T")[0]);
 
 /* #endregion */
 
@@ -42,8 +41,10 @@ Webflow.push(function () {
     .on("click", ".next-button-slide", function () {
       let valid = false;
 
+      let tiers_checked = $('input[name="Tiers"]:checked');
+
       // Validate fields in page 1
-      if (page == 1 && tiers.val()) {
+      if (page == 1 && tiers_checked.val()) {
         styleEmptys();
         valid = true;
       } else {
