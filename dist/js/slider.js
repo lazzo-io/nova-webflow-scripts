@@ -2,6 +2,8 @@ var Webflow = Webflow || [];
 var page = 1;
 
 /* #region Form fields */
+var tiers = $('input[name="Tiers"]');
+
 var headline = $("#Headline");
 var subheadline = $("#Subheadline");
 var bodypress = $("#BodyPress");
@@ -225,7 +227,7 @@ industries.change(function () {
 function styleEmptys() {
   switch (page) {
     case 1:
-      !tiers.val() ? tiers.addClass("empty") : tiers.removeClass("empty");
+      !tiers_cal.val() ? tiers_cal.addClass("empty") : tiers_cal.removeClass("empty");
       break;
 
     case 2:

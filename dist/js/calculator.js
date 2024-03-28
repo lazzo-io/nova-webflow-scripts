@@ -1,10 +1,17 @@
-const BASE_PRICE = 397;
-
 const TIER_1_PRICE = 397;
 const TIER_2_PRICE = 497;
 const TIER_3_PRICE = 697;
 
-const BASE_WORDS = 600;
+const TIER_1_BASE_WORDS = 500;
+const TIER_2_BASE_WORDS = 600;
+const TIER_3_BASE_WORDS = 800;
+
+const TIER_1_BASE_SELECTS = 1;
+const TIER_2_BASE_SELECTS = 2;
+const TIER_3_BASE_SELECTS = 4;
+
+const BASE_PRICE = 397;
+const BASE_WORDS = 500;
 const BASE_SELECTS = 3;
 const EXTRA_ONEHND_WORDS = 147;
 const EXTRA_ONE_SELECT = 147;
@@ -15,7 +22,7 @@ const EXTRA_SAME_DAY = 150;
 
 var timer;
 
-const tiers = $('input[name="Tiers"]');
+const tiers_cal = $('input[name="Tiers"]');
 
 const area = document.getElementById("BodyPress");
 const states_cal = $("#States");
@@ -25,7 +32,7 @@ const date_dist_cal = $("#DateDist");
 
 document.getElementById("FORMID").value = getUID();
 
-tiers.change(function () {
+tiers_cal.change(function () {
   clearTimeout(timer);
 
   timer = setTimeout(() => {
@@ -75,21 +82,40 @@ date_dist_cal.change(function () {
 
 function calculatePrice() {
   let total = BASE_PRICE;
+  let current_base_words = BASE_WORDS;
+
   let extra_words = 0;
   let extra_selects = 0;
 
   let tier = $('input[name="Tiers"]:checked').val();
   
-  if(tier === "Tier1") total = TIER_1_PRICE;
-  if(tier === "Tier2") total = TIER_2_PRICE;
-  if(tier === "Tier3") total = TIER_3_PRICE;
+  if(tier === "Tier1") { 
+    total = TIER_1_PRICE;
+    current_base_words = TIER_1_BASE_WORDS;
+
+    document.getElementById("base-total-words").innerText = TIER_1_BASE_WORDS;
+  }
+
+  if(tier === "Tier2") {
+    total = TIER_2_PRICE;
+    current_base_words = TIER_2_BASE_WORDS;
+
+    document.getElementById("base-total-words").innerText = TIER_2_BASE_WORDS;
+  }
+
+  if(tier === "Tier3") {
+    total = TIER_3_PRICE;
+    current_base_words = TIER_3_BASE_WORDS;
+
+    document.getElementById("base-total-words").innerText = TIER_3_BASE_WORDS;
+  }
 
   let word_counter = wordCounter();
 
   // Calculate total words
-  if (word_counter > BASE_WORDS) {
+  if (word_counter > current_base_words) {
     let word_counter_near = Math.ceil(word_counter / 100) * 100;
-    let extra_100_words = (word_counter_near - BASE_WORDS) / 100;
+    let extra_100_words = (word_counter_near - current_base_words) / 100;
 
     extra_words = extra_100_words * EXTRA_ONEHND_WORDS;
 
@@ -100,9 +126,9 @@ function calculatePrice() {
     document.getElementById("StripeExtraHundreds").value = extra_100_words;
 
     // Update texts
-    document.getElementById("calculator-extra-words").innerText = word_counter - BASE_WORDS;
+    document.getElementById("calculator-extra-words").innerText = word_counter - current_base_words;
   } else {
-    document.getElementById("calculator-total-words").innerText = BASE_WORDS;
+    document.getElementById("calculator-total-words").innerText = current_base_words;
 
     // Update Stripe fields
     document.getElementById("StripeExtraHundreds").value = 0;
@@ -118,7 +144,11 @@ function calculatePrice() {
   let industry_counter = Number(selectCounter("#Industries"));
 
   if (state_counter || state_counter) {
-    let extra_selectors = state_counter + industry_counter > 3 ? state_counter + industry_counter - BASE_SELECTS : 0;
+    let extra_selectors = 0;
+
+    if(tier === "Tier1") extra_selectors = state_counter + industry_counter > TIER_1_BASE_SELECTS ? state_counter + industry_counter - TIER_1_BASE_SELECTS : 0;
+    if(tier === "Tier2") extra_selectors = state_counter + industry_counter > TIER_2_BASE_SELECTS ? state_counter + industry_counter - TIER_2_BASE_SELECTS : 0;
+    if(tier === "Tier3") extra_selectors = state_counter + industry_counter > TIER_3_BASE_SELECTS ? state_counter + industry_counter - TIER_3_BASE_SELECTS : 0;
 
     extra_selects = extra_selectors * EXTRA_ONE_SELECT;
 
