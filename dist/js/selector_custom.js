@@ -1,10 +1,10 @@
   $('#States').ready(function() {
     $("#States").multiselect({
       columns: 1,
-      placeholder: "Select a state",
+      placeholder: "Select a wire circuit",
       search: true,
       searchOptions: {
-        default: "Type to search states",
+        default: "Type to search a wire",
       },
     });
   });
@@ -21,10 +21,10 @@
   $('#Industries').ready(function() {
     $("#Industries").multiselect({
       columns: 1,
-      placeholder: "Select an industry",
+      placeholder: "Select trades",
       search: true,
       searchOptions: {
-        default: "Type to search industries",
+        default: "Type to search a trade",
       },
     });
   });

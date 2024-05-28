@@ -137,13 +137,13 @@ function calculatePrice() {
     document.getElementById("calculator-extra-words").innerText = 0;
   }
 
-  // Calculate States
-  let state_counter = Number(selectCounter("#States"));
+  // Calculate States => Wire Circuit
+  let state_counter = 0;//Number(selectCounter("#States"));
 
-  // Calculate Industries
+  // Calculate Industries => Trades
   let industry_counter = Number(selectCounter("#Industries"));
 
-  if (state_counter || state_counter) {
+  if (industry_counter) {
     let extra_selectors = 0;
 
     if(tier === "Tier1") extra_selectors = state_counter + industry_counter > TIER_1_BASE_SELECTS ? state_counter + industry_counter - TIER_1_BASE_SELECTS : 0;
