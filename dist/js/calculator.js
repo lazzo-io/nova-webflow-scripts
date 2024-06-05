@@ -30,7 +30,15 @@ const industries_cal = $("#Industries");
 
 const date_dist_cal = $("#DateDist");
 
-document.getElementById("FORMID").value = getUID();
+const order_uid = getUID();
+
+$(document).ready(function() {
+  document.getElementById("FORMID").value = order_uid;
+
+  $("form#wf-form-Press-Release-Form").attr("redirect", "/order-loading?fid=" + order_uid);
+});
+
+$("#BodyPress")
 
 tiers_cal.change(function () {
   clearTimeout(timer);
